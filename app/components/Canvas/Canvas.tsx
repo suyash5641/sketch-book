@@ -47,6 +47,9 @@ export const Canvas = ({ color }: IProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
   const drawing = useRef(false);
+  // const drawHistory = useRef([]);
+  const drawHistory = useRef<ImageData[]>([]);
+  const historyPointer = useRef(0);
 
   const get = useCallback(async () => {
     // const { email, password } = payload;
@@ -80,6 +83,19 @@ export const Canvas = ({ color }: IProps) => {
 
         // Draw the image onto the canvas
         cont.drawImage(image, 0, 0, canvas.width, canvas.height);
+        if (canvasRef.current && ctx.current) {
+          // const dataURL = canvasRef.current.toDataURL();
+          // console.log(dataURL, "url", ctx.current);
+          const imageData = cont.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          drawHistory.current.push(imageData);
+          historyPointer.current = drawHistory.current.length - 1;
+          // historyPointer.current += 1;
+        }
       }
     },
     [get]
@@ -109,14 +125,16 @@ export const Canvas = ({ color }: IProps) => {
 
     ctx.current = context;
     getUserCanvas(context, canvas);
+    console.log("test user");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [color]);
+  }, []);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     const { offsetX, offsetY } = event.nativeEvent;
     if (ctx.current) {
       ctx.current.beginPath();
       ctx.current.moveTo(offsetX, offsetY);
+      // console.log(offsetX, offsetY, "down");
       drawing.current = true;
     }
   };
@@ -127,12 +145,67 @@ export const Canvas = ({ color }: IProps) => {
     const { offsetX, offsetY } = event.nativeEvent;
     if (ctx.current) {
       ctx.current.lineTo(offsetX, offsetY);
+      // console.log(offsetX, offsetY, "mouse move", ctx.current);
       ctx.current.stroke();
+    }
+  };
+
+  const undo = () => {
+    // console.log("test", drawing.current);
+    // if (!drawing.current) return;
+
+    if (ctx.current) {
+      // ctx.current.reset();
+      // ctx.current.restore();
+      if (historyPointer.current > 0) historyPointer.current -= 1;
+      // if(historyPointer.current < drawHistory.current.length - 1 && actionMenuItem === MENU_ITEMS.REDO) historyPointer.current += 1
+      const imageData = drawHistory.current[historyPointer.current];
+      console.log(
+        "test",
+        imageData,
+        historyPointer.current,
+        drawHistory.current
+      );
+      ctx.current.putImageData(imageData, 0, 0);
+      // const imageData = ctx.current.getImageData(0, 0, 100, 100);
+      // ctx.current.putImageData(imageData, 231, 80);
+      // ctx.current.beginPath();
+      // ctx.current.moveTo(231, 121);
+      // ctx.current.lineTo(631, 80);
+      // ctx.current.stroke();
+    }
+  };
+
+  const redo = () => {
+    // console.log("test", drawing.current);
+    // if (!drawing.current) return;
+
+    if (ctx.current) {
+      // ctx.current.reset();
+      // ctx.current.restore();
+      if (historyPointer.current < drawHistory.current.length - 1)
+        historyPointer.current += 1;
+      const imageData = drawHistory.current[historyPointer.current];
+      ctx.current.putImageData(imageData, 0, 0);
     }
   };
 
   const handleMouseUp = () => {
     drawing.current = false;
+    if (canvasRef.current && ctx.current) {
+      // const dataURL = canvasRef.current.toDataURL();
+      // console.log(dataURL, "url", ctx.current);
+      const imageData = ctx.current.getImageData(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+      drawHistory.current.push(imageData);
+      historyPointer.current = drawHistory.current.length - 1;
+      // historyPointer.current += 1;
+    }
+    console.log("mouse up ");
   };
 
   const saveCanvasAsImage = () => {
@@ -201,6 +274,8 @@ export const Canvas = ({ color }: IProps) => {
       <button onClick={saveCanvasAsImage}>download</button>
       <button onClick={createAccountWithEmailPassword}>register user</button>
       <button onClick={genUrl}>save </button>
+      <button onClick={undo}>undo</button>
+      <button onClick={redo}>redo</button>
       <div
         style={{ border: "1px solid red" }}
         onMouseDown={handleMouseDown}
