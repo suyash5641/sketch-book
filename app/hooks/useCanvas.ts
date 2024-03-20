@@ -1,55 +1,6 @@
-"use client";
-// import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useState, useRef } from "react";
 
-// export const Canvas: React.FC = () => {
-//   const [color, setColor] = useState<string>("red");
-//   // const canvasRef = useRef<MutableRefObject>(null);
-//   const canvasRef = useRef<HTMLCanvasElement>();
-
-//   useEffect(() => {
-//     const canvas = canvasRef.current;
-
-//     if (!canvas) return;
-//     const context = canvas.getContext("2d");
-
-//     if (!context) return;
-//     canvas.height = window.innerHeight * 2;
-//     canvas.width = window.innerWidth * 2;
-//     canvas.style.width = `${window.innerWidth}px`;
-//     canvas.style.height = `${window.innerHeight}px`;
-//     // const context = canvas.getContext("2d");
-
-//     context.strokeWidth = 5;
-//     context.scale(2, 2);
-//     context.lineCap = "round";
-//     context.strokeStyle = color;
-//     context.lineWidth = 5;
-//     ctx.current = context;
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, []);
-
-//   return (
-//     <div
-//       onMouseDown={handleMouseDown}
-//       onMouseMove={handleMouseMove}
-//       onMouseUp={handleMouseUp}
-//     >
-//       <canvas ref={canvasRef} />
-//     </div>
-//   );
-// };
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-interface IProps {
-  color: string;
-}
-
-export const Canvas = () => {
+const useCanvas = () => {
   const [color, setColor] = useState<string>("red");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
@@ -60,83 +11,6 @@ export const Canvas = () => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [draw, setIsDraw] = useState<boolean>(true);
   const [user, setIsUser] = useState<boolean>(false);
-
-  useLayoutEffect(() => {
-    const canvas = canvasRef?.current;
-    const context = canvas?.getContext("2d");
-
-    if (!canvas || !context) return;
-
-    // if (!context) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 4;
-    // canvas.style.width = `${window.innerWidth}px`;
-    // canvas.style.height = `${window.innerHeight}px`;
-    // // canvas.style.height = `${window.innerHeight}px
-    // // canvas.style.width = `${window.innerWidth}px`;
-    // // canvas.style.height = `${window.innerHeight}px`;
-    // // canvas.width = window.innerWidth;
-    // // canvas.height = window.innerHeight;
-    // // canvas.style.width = "100%";
-
-    // context.lineWidth = 5;
-    // // context.scale(2, 2);
-    // context.lineCap = "round";
-    // context.strokeStyle = color;
-    // context.lineWidth = 5;
-    // // context.fillStyle = "white";
-    // ctx.current = context;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // const updateCanvasSize = () => {
-    //   canvas.width = window.innerWidth;
-    //   canvas.height = window.innerHeight;
-    // };
-
-    // updateCanvasSize(); // Set initial size
-    // window.addEventListener("resize", updateCanvasSize); // Update size on window resize
-
-    context.lineWidth = 5;
-    context.lineCap = "round";
-    context.strokeStyle = color;
-    ctx.current = context;
-    getInitaialData();
-
-    // return () => {
-    //   window.removeEventListener("resize", updateCanvasSize); // Cleanup event listener
-    // };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    // const context = canvas?.getContext("2d");
-
-    if (!canvas) return;
-
-    const updateCanvasSize = () => {
-      // canvas.width = window.innerWidth;
-      // canvas.height = window.innerHeight;
-      // canvas.style.width = `${window.innerWidth}px`;
-      // canvas.style.width = "100%";
-      // canvas.style.height = "100%";
-      // context?.scale(1, 1);
-      // canvas.style.height = `${window.innerHeight}px`;
-      // canvas.height = window.innerHeight;
-      // drawImage();
-    };
-
-    window.addEventListener("resize", updateCanvasSize); // Update size on window resize
-
-    // context.lineWidth = 5;
-    // context.lineCap = "round";
-    // context.strokeStyle = color;
-    // ctx.current = context;
-
-    return () => {
-      window.removeEventListener("resize", updateCanvasSize); // Cleanup event listener
-    };
-  }, []);
 
   const handleMouseDown = (event: any) => {
     const { offsetX, offsetY } = event.nativeEvent;
@@ -250,18 +124,6 @@ export const Canvas = () => {
     // }
   };
 
-  const drawImage = () => {
-    if (ctx.current) {
-      // ctx.current.reset();
-      // ctx.current.restore();
-
-      // if (historyPointer.current > 0) historyPointer.current -= 1;
-      // if(historyPointer.current < drawHistory.current.length - 1 && actionMenuItem === MENU_ITEMS.REDO) historyPointer.current += 1
-      const imageData = drawHistory.current[historyPointer.current];
-      ctx.current.putImageData(imageData, 0, 0);
-    }
-  };
-
   const erase = () => {
     if (ctx.current) {
       ctx.current.strokeStyle = "white";
@@ -312,23 +174,23 @@ export const Canvas = () => {
     console.log("mouse up ");
   };
 
-  const getInitaialData = () => {
-    if (canvasRef.current && ctx.current) {
-      // const dataURL = canvasRef.current.toDataURL();
-      // console.log(dataURL, "url", ctx.current);
-      const imageData = ctx.current.getImageData(
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
-      drawHistory.current.push(imageData);
-      historyPointer.current = drawHistory.current.length - 1;
-      setIsDrawing(false);
-      console.log(drawHistory.current.length - 1, "initial");
-      // historyPointer.current += 1;
-    }
-  };
+  //   const getInitaialData = () => {
+  //     if (canvasRef.current && ctx.current) {
+  //       // const dataURL = canvasRef.current.toDataURL();
+  //       // console.log(dataURL, "url", ctx.current);
+  //       const imageData = ctx.current.getImageData(
+  //         0,
+  //         0,
+  //         canvasRef.current.width,
+  //         canvasRef.current.height
+  //       );
+  //       drawHistory.current.push(imageData);
+  //       historyPointer.current = drawHistory.current.length - 1;
+  //       setIsDrawing(false);
+  //       console.log(drawHistory.current.length - 1, "initial");
+  //       // historyPointer.current += 1;
+  //     }
+  //   };
 
   const saveCanvasAsImage = () => {
     const canvas = canvasRef.current;
@@ -343,53 +205,16 @@ export const Canvas = () => {
     }
   };
 
-  return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "24px",
-          position: "absolute",
-          zIndex: 2,
-        }}
-      >
-        <button onClick={saveCanvasAsImage}>d</button>
-        <button onClick={undo}>undo</button>
-        <button onClick={redo}>redo</button>
-        <button onClick={erase}>Erase</button>
-        <button onClick={Draw}>Draw</button>
-      </div>
-      <div
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onTouchStart={handleMouseDown}
-        onTouchMove={handleMouseMove}
-        onTouchEnd={handleMouseUp}
-        // style={{ overflowX: "auto", width: "100%" }}
-      >
-        <canvas
-          // style={{ border: "1px solid blue", width: "100%", height: "100%" }}
-          // style={{ width: "100%" }}
-          style={{
-            // position: "absolute",
-            touchAction: "none",
-            imageRendering: "pixelated",
-            // width: "100%",
-            // maxWidth: "100%",
-            // height: "100%",
-            // width: "1920px",
-            // height: "1080px",
-            // width: "100%",
-            // height: "100%",
-          }}
-          className="test"
-          ref={canvasRef}
-        ></canvas>
-      </div>
-    </>
-  );
+  return {
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    saveCanvasAsImage,
+    undo,
+    redo,
+    draw,
+    erase,
+    canvasRef,
+  };
 };
+export default useCanvas;
