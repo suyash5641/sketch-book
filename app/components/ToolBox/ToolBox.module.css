@@ -1,0 +1,41 @@
+.toolboxContainer {
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  position: absolute;
+  z-index: 2;
+  /* width: 100%; */
+  left: 24px;
+  top: 30%;
+}
+.red {
+  background-color: red;
+  width: 24px;
+  height: 24px;
+}
+.blue {
+  background-color: blue;
+  width: 24px;
+  height: 24px;
+}
+.orange {
+  background-color: orange;
+  width: 24px;
+  height: 24px;
+}
+
+.yellow {
+  background-color: yellow;
+  width: 24px;
+  height: 24px;
+}
+.black {
+  background-color: black;
+  width: 24px;
+  height: 24px;
+}
+.green {
+  background-color: green;
+  width: 24px;
+  height: 24px;
+}

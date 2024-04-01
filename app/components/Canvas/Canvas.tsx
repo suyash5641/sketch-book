@@ -86,6 +86,7 @@ export const Canvas = () => {
   } = useCanvas();
 
   useEffect(() => {
+    // console.log(actionMenuItem, "item", activeMenuItem);
     if (!canvasRef.current) return;
 
     if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
@@ -94,15 +95,15 @@ export const Canvas = () => {
       undo();
     } else if (actionMenuItem === MENU_ITEMS.REDO) {
       redo();
-    } else if (actionMenuItem === MENU_ITEMS.PENCIL) {
+    } else if (activeMenuItem === MENU_ITEMS.PENCIL) {
       Draw();
-    } else if (actionMenuItem === MENU_ITEMS.ERASER) {
+    } else if (activeMenuItem === MENU_ITEMS.ERASER) {
       erase();
     }
 
     dispatch(actionItemClick(null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actionMenuItem, canvasRef, dispatch]);
+  }, [actionMenuItem, canvasRef, activeMenuItem]);
 
   useLayoutEffect(() => {
     const canvas = canvasRef?.current;

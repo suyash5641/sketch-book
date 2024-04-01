@@ -8,6 +8,8 @@ const COLORS = {
   WHITE: "white",
 };
 
+const TOOLCOLORS = ["black", "red", "green", "blue", "orange", "yellow"];
+
 const MENU_ITEMS = {
   PENCIL: "PENCIL",
   ERASER: "ERASER",
@@ -16,4 +18,4 @@ const MENU_ITEMS = {
   DOWNLOAD: "DOWNLOAD",
 };
 
-export { COLORS, MENU_ITEMS };
+export { COLORS, MENU_ITEMS, TOOLCOLORS };

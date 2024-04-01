@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { useCallback, useRef, useState } from "react";
 import { Canvas } from "./components/Canvas/Canvas";
 import { Menu } from "./components/Menu/Menu";
+import { ToolBox } from "./components/ToolBox/ToolBox";
 // import Canvas from "./components/Canvas/Canvas";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
     >
       <Canvas />
       <Menu />
+      <ToolBox />
     </div>
   );
 }
