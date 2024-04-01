@@ -1,0 +1,19 @@
+.menuContainer {
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+}
+
+.redoIcon {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.activeMenuIcon {
+  background: yellow;
+}
+.inactiveMenuIcon {
+  background: white;
+}

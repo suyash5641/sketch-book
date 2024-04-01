@@ -108,12 +108,20 @@ const useCanvas = () => {
   };
 
   const undo = () => {
+    console.log(drawHistory, historyPointer.current);
     if (ctx.current && historyPointer.current > 0) {
       // ctx.current.reset();
       // ctx.current.restore();
 
       if (historyPointer.current > 0) historyPointer.current -= 1;
       // if(historyPointer.current < drawHistory.current.length - 1 && actionMenuItem === MENU_ITEMS.REDO) historyPointer.current += 1
+      const imageData = drawHistory.current[historyPointer.current];
+      ctx.current.putImageData(imageData, 0, 0);
+    } else if (ctx.current && historyPointer.current === 0) {
+      // ctx.current.reset();
+      // const imageData = new ImageData(0,0,0,0);
+      // ctx.current.putImageData(imageData, 0, 0);
+      console.log(drawHistory, historyPointer.current, "inside");
       const imageData = drawHistory.current[historyPointer.current];
       ctx.current.putImageData(imageData, 0, 0);
     }
@@ -174,23 +182,23 @@ const useCanvas = () => {
     console.log("mouse up ");
   };
 
-  //   const getInitaialData = () => {
-  //     if (canvasRef.current && ctx.current) {
-  //       // const dataURL = canvasRef.current.toDataURL();
-  //       // console.log(dataURL, "url", ctx.current);
-  //       const imageData = ctx.current.getImageData(
-  //         0,
-  //         0,
-  //         canvasRef.current.width,
-  //         canvasRef.current.height
-  //       );
-  //       drawHistory.current.push(imageData);
-  //       historyPointer.current = drawHistory.current.length - 1;
-  //       setIsDrawing(false);
-  //       console.log(drawHistory.current.length - 1, "initial");
-  //       // historyPointer.current += 1;
-  //     }
-  //   };
+  const getInitialData = () => {
+    if (canvasRef.current && ctx.current && drawHistory.current.length === 0) {
+      // const dataURL = canvasRef.current.toDataURL();
+      // console.log(dataURL, "url", ctx.current);
+      const imageData = ctx.current.getImageData(
+        0,
+        0,
+        canvasRef.current.width,
+        canvasRef.current.height
+      );
+      drawHistory.current.push(imageData);
+      historyPointer.current = drawHistory.current.length - 1;
+      setIsDrawing(false);
+      console.log(drawHistory.current.length - 1, "initial");
+      // historyPointer.current += 1;
+    }
+  };
 
   const saveCanvasAsImage = () => {
     const canvas = canvasRef.current;
@@ -215,6 +223,10 @@ const useCanvas = () => {
     draw,
     erase,
     canvasRef,
+    drawHistory,
+    ctx,
+    Draw,
+    getInitialData,
   };
 };
 export default useCanvas;
