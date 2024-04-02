@@ -7,35 +7,63 @@
   /* width: 100%; */
   left: 24px;
   top: 30%;
+  padding: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .red {
   background-color: red;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
 }
 .blue {
   background-color: blue;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
 }
 .orange {
   background-color: orange;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
 }
 
 .yellow {
   background-color: yellow;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
 }
 .black {
   background-color: black;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
 }
 .green {
   background-color: green;
   width: 24px;
   height: 24px;
+  border-radius: 4px;
+}
+
+.red:hover,
+.black:hover,
+.blue:hover,
+.green:hover,
+.yellow:hover,
+.orange:hover,
+.green:hover {
+  /* border: 1px solid grey; */
+  cursor: pointer;
+  /* width: 20px;
+  height: 20px; */
+  border-radius: 4px;
+  padding: 4px;
+  border: 2px solid white;
+}
+
+.toolItem {
+  width: 100%;
 }

@@ -3,11 +3,11 @@ import { COLORS, MENU_ITEMS } from "../utils/constant";
 
 const initialState = {
   [MENU_ITEMS.PENCIL]: {
-    color: COLORS.BLACK,
+    strokeColor: COLORS.BLACK,
     size: 3,
   },
   [MENU_ITEMS.ERASER]: {
-    color: COLORS.WHITE,
+    strokeColor: COLORS.WHITE,
     size: 3,
   },
   [MENU_ITEMS.UNDO]: {},
@@ -20,10 +20,10 @@ export const toolBoxSlice = createSlice({
   initialState,
   reducers: {
     changeColor: (state, action) => {
-      state[action.payload.item].color = action.payload.color;
+      state[action.payload.item].strokeColor = action?.payload?.color;
     },
     changeBrushSize: (state, action) => {
-      state[action.payload.item].size = action.payload.size;
+      state[action.payload.item].size = action?.payload?.size;
     },
   },
 });

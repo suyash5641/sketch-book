@@ -12,7 +12,7 @@ export const ToolBox = () => {
   const showBrushToolOption =
     activeMenuItem === MENU_ITEMS.PENCIL ||
     activeMenuItem === MENU_ITEMS.ERASER;
-  const { color, size } = useSelector(
+  const { strokeColor, size } = useSelector(
     (state: any) => state.toolbox[activeMenuItem]
   );
 
@@ -26,35 +26,53 @@ export const ToolBox = () => {
 
   return (
     <Stack className={styles.toolboxContainer}>
-      <Stack justifyContent={"space-between"} gap={"24px"}>
-        <Stack
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <p>Stroke</p>
+      {showStrokeToolOption && (
+        <Stack justifyContent={"space-between"} gap={"24px"}>
           <Stack
-            style={{
-              backgroundColor: `${color}`,
-              width: "24px",
-              height: "24px",
-            }}
-          ></Stack>
-        </Stack>
-        <Stack
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-          gap={"16px"}
-        >
-          {TOOLCOLORS.map((data, index) => (
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <p>Stroke</p>
             <Stack
-              key={index}
-              className={styles[data]}
-              onClick={() => updateColor(data)}
-            />
-          ))}
+              style={{
+                backgroundColor: `${strokeColor}`,
+                width: "24px",
+                height: "24px",
+                borderRadius: "4px",
+              }}
+            ></Stack>
+          </Stack>
+          <Stack
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            gap={"16px"}
+          >
+            {TOOLCOLORS.map((data, index) => (
+              <Stack
+                key={index}
+                className={styles[data]}
+                onClick={() => updateColor(data)}
+              />
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
+      )}
+      {showBrushToolOption && (
+        <Stack className={styles.toolItem}>
+          <p className={styles.toolText}>Brush Size</p>
+          <Stack flexDirection={"row"} className={styles.itemContainer}>
+            <input
+              type="range"
+              min={1}
+              max={10}
+              step={1}
+              onChange={updateBrushSize}
+              value={size}
+            />
+          </Stack>
+        </Stack>
+      )}
     </Stack>
   );
 };

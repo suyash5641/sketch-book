@@ -5,11 +5,32 @@
   position: absolute;
   z-index: 2;
   width: 100%;
+  top: 12px;
+  /* padding: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  /* position: absolute;
+  z-index: 2;
+  width: 100%; */
+  padding: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
 }
 
 .redoIcon {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+  width: 24px;
+  height: 24px;
 }
 .activeMenuIcon {
   background: yellow;
