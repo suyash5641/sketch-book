@@ -25,44 +25,44 @@ export const Menu = () => {
   // console.log(activeMenuItem, "testt ", activeMenuItem === MENU_ITEMS.PENCIL);
 
   return (
-    <Stack flexDirection={"row"} className={styles.menuContainer}>
-      <Stack flexDirection={"row"} className={styles.container}>
-        <IconButton
-          onClick={() => handleMenuClick(MENU_ITEMS.PENCIL)}
-          className={
-            activeMenuItem === MENU_ITEMS.PENCIL
-              ? styles.activeMenuIcon
-              : styles.inactiveMenuIcon
-          }
-        >
-          <CreateIcon className={styles.icon} />
-        </IconButton>
-        <IconButton
-          className={
-            activeMenuItem === MENU_ITEMS.ERASER
-              ? styles.activeMenuIcon
-              : styles.inactiveMenuIcon
-          }
-          onClick={() => handleMenuClick(MENU_ITEMS.ERASER)}
-        >
-          <Image
-            src="./ink_eraser.svg"
-            alt="Eraser Logo"
-            className={styles.vercelLogo}
-            width={24}
-            height={24}
-          />
-        </IconButton>
-        <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.UNDO)}>
-          <ReplayIcon className={styles.icon} />
-        </IconButton>
-        <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.REDO)}>
-          <ReplayIcon className={styles.redoIcon} />
-        </IconButton>
-        <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.DOWNLOAD)}>
-          <FileDownloadIcon className={styles.icon} />
-        </IconButton>
-      </Stack>
+    // <Stack flexDirection={"row"} className={styles.menuContainer}>
+    <Stack flexDirection={"row"} className={styles.container}>
+      <IconButton
+        onClick={() => handleMenuClick(MENU_ITEMS.PENCIL)}
+        className={
+          activeMenuItem === MENU_ITEMS.PENCIL
+            ? styles.activeMenuIcon
+            : styles.inactiveMenuIcon
+        }
+      >
+        <CreateIcon className={styles.icon} />
+      </IconButton>
+      <IconButton
+        className={
+          activeMenuItem === MENU_ITEMS.ERASER
+            ? styles.activeMenuIcon
+            : styles.inactiveMenuIcon
+        }
+        onClick={() => handleMenuClick(MENU_ITEMS.ERASER)}
+      >
+        <Image
+          src="./ink_eraser.svg"
+          alt="Eraser Logo"
+          className={styles.vercelLogo}
+          width={18}
+          height={18}
+        />
+      </IconButton>
+      <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.UNDO)}>
+        <ReplayIcon className={styles.icon} />
+      </IconButton>
+      <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.REDO)}>
+        <ReplayIcon className={styles.redoIcon} />
+      </IconButton>
+      <IconButton onClick={() => handleActioItemClick(MENU_ITEMS.DOWNLOAD)}>
+        <FileDownloadIcon className={styles.icon} />
+      </IconButton>
     </Stack>
+    // </Stack>
   );
 };

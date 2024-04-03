@@ -6,6 +6,7 @@
   z-index: 2;
   width: 100%;
   top: 12px;
+
   /* padding: 12px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
 }
@@ -17,24 +18,47 @@
   /* position: absolute;
   z-index: 2;
   width: 100%; */
-  padding: 12px;
+  z-index: 2;
+  position: absolute;
+  padding: 4px 12px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  top: 12px;
+
+  left: 40%;
+  /* right: 40%; */
+  /* width: 100%; */
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 
 .redoIcon {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 .activeMenuIcon {
   background: yellow;
 }
 .inactiveMenuIcon {
   background: white;
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    /* width: calc(100% - 24px); */
+    left: 0px;
+    right: 0px;
+    margin: 0px 12px;
+
+    /* left: 8px;
+    right: 8px; */
+    /* left: 50%; */
+    /* left: 40%; */
+    /* right: 40%; */
+    /* width: 100%; */
+  }
 }

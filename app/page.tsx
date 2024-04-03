@@ -11,15 +11,10 @@ import { ToolBox } from "./components/ToolBox/ToolBox";
 export default function Home() {
   return (
     // <div style={{ display: "flex", flexDirection: "column" }}>
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <>
       <Canvas />
       <Menu />
       <ToolBox />
-    </div>
+    </>
   );
 }

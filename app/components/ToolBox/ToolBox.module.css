@@ -67,3 +67,7 @@
 .toolItem {
   width: 100%;
 }
+
+.toolContainer {
+  flex-wrap: wrap;
+}

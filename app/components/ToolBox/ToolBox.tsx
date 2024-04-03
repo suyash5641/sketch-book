@@ -47,6 +47,7 @@ export const ToolBox = () => {
             flexDirection={"row"}
             justifyContent={"space-between"}
             gap={"16px"}
+            className={styles.toolContainer}
           >
             {TOOLCOLORS.map((data, index) => (
               <Stack
