@@ -5,10 +5,14 @@
   position: absolute;
   z-index: 2;
   /* width: 100%; */
-  left: 24px;
+
   top: 30%;
   padding: 12px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  left: 0px;
+  right: 0px;
+  margin: 0px 12px;
+  width: fit-content;
 }
 .red {
   background-color: red;
@@ -55,13 +59,10 @@
 .yellow:hover,
 .orange:hover,
 .green:hover {
-  /* border: 1px solid grey; */
   cursor: pointer;
-  /* width: 20px;
-  height: 20px; */
   border-radius: 4px;
   padding: 4px;
-  border: 2px solid white;
+  border: 2px solid var(--background-white);
 }
 
 .toolItem {
@@ -70,4 +71,10 @@
 
 .toolContainer {
   flex-wrap: wrap;
+}
+
+.toolText {
+  color: var(--toolTextColor);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 }

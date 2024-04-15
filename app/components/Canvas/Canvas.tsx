@@ -2,13 +2,7 @@
 import useCanvas from "@/app/hooks/useCanvas";
 import { actionItemClick } from "@/app/slice/menuItemSlice";
 import { MENU_ITEMS } from "@/app/utils/constant";
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Canvas = () => {
@@ -90,19 +84,18 @@ export const Canvas = () => {
         onTouchMove={handleMouseMove}
         onTouchEnd={handleMouseUp}
         style={{
-          width: "100%", // Ensure the div takes up the full width of its parent
-          height: "100vh", // Ensure the div takes up the full height of the viewport
-          overflow: "hidden", // Prevent scrolling
-          display: "flex", // Optional: use flexbox for layout
-          alignItems: "center", // Optional: vertically center the canvas
-          justifyContent: "center", // Optional: horizontally center the canvas
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <canvas
           style={{
             touchAction: "none",
             imageRendering: "pixelated",
-            // border: "4px solid red",
           }}
           className="test"
           ref={canvasRef}

@@ -9,7 +9,6 @@ const useCanvas = () => {
   const historyPointer = useRef(0);
   const [isDrawing, setIsDrawing] = useState(false);
   const [draw, setIsDraw] = useState<boolean>(true);
-  const [user, setIsUser] = useState<boolean>(false);
 
   const handleMouseDown = (event: any) => {
     const { offsetX, offsetY } = event.nativeEvent;
@@ -36,7 +35,6 @@ const useCanvas = () => {
   };
 
   const undo = () => {
-    console.log(drawHistory, historyPointer.current);
     if (ctx.current && historyPointer.current > 0) {
       if (historyPointer.current > 0) historyPointer.current -= 1;
 
@@ -84,7 +82,6 @@ const useCanvas = () => {
       historyPointer.current = drawHistory.current.length - 1;
       setIsDrawing(false);
     }
-    console.log("mouse up ");
   };
 
   const getInitialData = () => {

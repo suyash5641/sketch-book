@@ -3,7 +3,11 @@ import { MENU_ITEMS } from "../utils/constant";
 
 const initialState = {
   activeMenuItem: MENU_ITEMS.PENCIL,
+  currentMenuItem: MENU_ITEMS.PENCIL,
   actionMenuItem: null,
+  showBrushToolOption: false,
+  showStrokeToolOption: false,
+  showToggle: true,
 };
 
 export const menuItemSlice = createSlice({
@@ -13,12 +17,31 @@ export const menuItemSlice = createSlice({
     menuItemClick: (state, action) => {
       state.activeMenuItem = action.payload;
     },
+    currentMenuItemClick: (state, action) => {
+      state.currentMenuItem = action.payload;
+    },
     actionItemClick: (state, action) => {
       state.actionMenuItem = action.payload;
+    },
+    showBrushToggleOptions: (state, action) => {
+      state.showBrushToolOption = action.payload;
+    },
+    showStrokeToggleOptions: (state, action) => {
+      state.showStrokeToolOption = action.payload;
+    },
+    showToggle: (state, action) => {
+      state.showToggle = action.payload;
     },
   },
 });
 
-export const { menuItemClick, actionItemClick } = menuItemSlice.actions;
+export const {
+  menuItemClick,
+  actionItemClick,
+  showStrokeToggleOptions,
+  showBrushToggleOptions,
+  currentMenuItemClick,
+  showToggle,
+} = menuItemSlice.actions;
 
 export default menuItemSlice.reducer;
