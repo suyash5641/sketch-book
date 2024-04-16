@@ -1,0 +1,44 @@
+.toggleBox {
+  /* justify-content: center;
+  align-items: center;
+  gap: 16px; */
+  /* position: absolute;
+    z-index: 2;
+    width: 100%; */
+  /* z-index: 2;
+  position: absolute;
+  padding: 4px 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 8px;
+  top: 36px;
+  left: 0px;
+  right: 0px;
+  margin: 0px 12px; */
+  display: none;
+}
+
+.toggleText {
+  color: var(--toolTextColor);
+  font-family: Arial;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 640px) {
+  .toggleBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px 6px;
+
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 8px;
+    width: fit-content;
+    border: 2px solid #e0dfff;
+    /* margin-right: 0px; */
+    /* margin-left: 2px;
+    margin-top: 6px; */
+    /* margin-left: 46px; */
+    margin-top: 8px;
+  }
+}

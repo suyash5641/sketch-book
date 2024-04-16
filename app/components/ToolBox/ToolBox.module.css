@@ -1,0 +1,81 @@
+.toolboxContainer {
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  position: absolute;
+  z-index: 2;
+  /* width: 100%; */
+
+  top: 30%;
+  padding: 12px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  left: 0px;
+  right: 0px;
+  margin: 0px 12px;
+  width: fit-content;
+  border-radius: 8px;
+}
+.red {
+  background-color: red;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+.blue {
+  background-color: blue;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+.orange {
+  background-color: orange;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.yellow {
+  background-color: yellow;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+.black {
+  background-color: black;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+.green {
+  background-color: green;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.red:hover,
+.black:hover,
+.blue:hover,
+.green:hover,
+.yellow:hover,
+.orange:hover,
+.green:hover {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px;
+  border: 2px solid var(--background-white);
+}
+
+.toolItem {
+  width: 100%;
+}
+
+.toolContainer {
+  flex-wrap: wrap;
+}
+
+.toolText {
+  color: var(--toolTextColor);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
