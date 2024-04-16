@@ -13,12 +13,9 @@ import {
   showBrushToggleOptions,
 } from "@/app/slice/menuItemSlice";
 import { MENU_ITEMS } from "@/app/utils/constant";
+import { ToolBox } from "../ToolBox/ToolBox";
 
 export default function PopOver() {
-  //   const dispatch = useDispatch();
-  //   const activeMenuItem = useSelector(
-  //     (state: any) => state?.menu?.activeMenuItem
-  //   );
   const { currentMenuItem } = useSelector((state: any) => state?.menu);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -26,18 +23,6 @@ export default function PopOver() {
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    // console.log(event.currentTarget, "testttt", activeMenuItem);
-    // if (activeMenuItem === MENU_ITEMS.PENCIL) {
-    //   dispatch(
-    //     showStrokeToggleOptions(event.currentTarget === null ? false : true)
-    //   );
-    //   dispatch(showBrushToggleOptions(false));
-    // } else if (activeMenuItem === MENU_ITEMS.ERASER) {
-    //   dispatch(
-    //     showBrushToggleOptions(event.currentTarget === null ? false : true)
-    //   );
-    //   dispatch(showStrokeToggleOptions(false));
-    // }
   };
 
   const handleClose = () => {
@@ -51,12 +36,6 @@ export default function PopOver() {
     currentMenuItem === MENU_ITEMS.REDO ||
     currentMenuItem === MENU_ITEMS.DOWNLOAD;
 
-  //   React.useEffect(() => {
-  //     console.log(actionMenuItem, "kkk", showPopOver, activeMenuItem);
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [actionMenuItem]);
-  //   console.log(id, "test ");
-
   return (
     !showPopOver && (
       <Stack className={styles.popover}>
@@ -65,11 +44,6 @@ export default function PopOver() {
             aria-describedby={id}
             variant="contained"
             onClick={handleClick}
-            //   className={
-            //     activeMenuItem === MENU_ITEMS.PENCIL
-            //       ? styles.activeMenuIcon
-            //       : styles.inactiveMenuIcon
-            //   }
             className={styles.button}
           >
             <ColorLensIcon className={styles.icon} />
@@ -102,25 +76,36 @@ export default function PopOver() {
             vertical: "bottom",
             horizontal: "left",
           }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
+          // transformOrigin={{
+          //   vertical: "top",
+          //   horizontal: "left",
+          // }}
+          // transformOrigin={{
+          //   vertical: "top",
+          //   horizontal: "left",
+          // }}
           sx={{
             zIndex: "unset",
+            // top: "68px",
             // bgcolor: { xs: "rgba(0,0,0,0.2)", md: "unset" },
             // backdropFilter: { xs: "blur(2px)", md: "unset" },
+            // marginTop: "4px",
+            // left: "40px",
             ul: { py: "0px" },
             ".MuiPaper-root": {
               borderRadius: "10px",
-              boxShadow: "2px 2px 18px rgb(0 0 0 / 20%)",
-              border: " 1px solid #ddd",
-              width: { xs: "100%", md: "fit-content" },
+              // boxShadow: "2px 2px 18px rgb(0 0 0 / 20%)",
+              // border: " 1px solid #ddd",
+              width: { xs: "70%", md: "fit-content" },
+              boxShadow: "none",
+              border: "none",
+              backgroundColor: "transparent",
             },
           }}
           disablePortal
         >
           <Toggle />
+          {/* <ToolBox /> */}
         </Popover>
       </Stack>
     )

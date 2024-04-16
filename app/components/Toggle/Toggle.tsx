@@ -13,25 +13,14 @@ import {
 } from "@/app/slice/menuItemSlice";
 
 export const Toggle = () => {
-  const showTogglew = useSelector((state: any) => state?.menu?.showToggle);
-  const [checked, setChecked] = useState<boolean>(showTogglew ?? true);
+  const { isToggle, activeMenuItem } = useSelector((state: any) => state?.menu);
+  const [checked, setChecked] = useState<boolean>(isToggle ?? true);
   const dispatch = useDispatch();
-  const activeMenuItem = useSelector(
-    (state: any) => state?.menu?.activeMenuItem
-  );
   const [text, setText] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
     dispatch(showToggle(event.target.checked));
-    // if (activeMenuItem === MENU_ITEMS.PENCIL) {
-    //   dispatch(showStrokeToggleOptions(event.target.checked));
-    //   dispatch(showBrushToggleOptions(event.target.checked));
-    // } else if (activeMenuItem === MENU_ITEMS.ERASER) {
-    //   console.log(event.target.checked, "toggle-data");
-    //   dispatch(showBrushToggleOptions(event.target.checked));
-    //   dispatch(showStrokeToggleOptions(false));
-    // }
   };
 
   useEffect(() => {
@@ -49,6 +38,17 @@ export const Toggle = () => {
         checked={checked}
         onChange={handleChange}
         inputProps={{ "aria-label": "controlled" }}
+        sx={{
+          "&.MuiSwitch-root": {
+            height: "32px",
+            width: "54px",
+          },
+
+          "&.MuiSwitch-root .MuiSwitch-thumb": {
+            height: "13px",
+            width: "13px",
+          },
+        }}
       />
     </Stack>
   );

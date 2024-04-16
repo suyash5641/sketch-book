@@ -7,33 +7,10 @@ import { Stack, Typography } from "@mui/material";
 
 export const ToolBox = () => {
   const dispatch = useDispatch();
-  const activeMenuItem = useSelector((state: any) => state.menu.activeMenuItem);
-  const isShowStrokeToolOption = useSelector(
-    (state: any) => state?.menu?.showStrokeToolOption
-  );
-  const isShowBrushToolOption = useSelector(
-    (state: any) => state?.menu?.showBrushToolOption
-  );
-
-  const showToggle = useSelector((state: any) => state?.menu?.showToggle);
-
-  // const { isShowStrokeToolOption, isShowBrushToolOption } = useSelector(
-  //   (state: any) => state?.menu
-  // );
-
-  // const showStrokeToolOption =
-  //   (isShowStrokeToolOption
-  //     ? activeMenuItem === MENU_ITEMS.PENCIL
-  //     : isShowStrokeToolOption) ?? activeMenuItem === MENU_ITEMS.PENCIL;
-
-  // const showBrushToolOption =
-  //   isShowBrushToolOption ??
-  //   (activeMenuItem === MENU_ITEMS.PENCIL ||
-  //     activeMenuItem === MENU_ITEMS.ERASER);
-  const showStrokeToolOption =
-    showToggle && activeMenuItem === MENU_ITEMS.PENCIL;
+  const { activeMenuItem, isToggle } = useSelector((state: any) => state?.menu);
+  const showStrokeToolOption = isToggle && activeMenuItem === MENU_ITEMS.PENCIL;
   const showBrushToolOption =
-    showToggle &&
+    isToggle &&
     (activeMenuItem === MENU_ITEMS.PENCIL ||
       activeMenuItem === MENU_ITEMS.ERASER);
 
@@ -49,29 +26,13 @@ export const ToolBox = () => {
     dispatch(changeColor({ item: activeMenuItem, color: newColor }));
   };
 
-  // useEffect(() => {
-  //   console.log(isShowBrushToolOption, isShowStrokeToolOption, "test");
-  // }, [isShowBrushToolOption, isShowStrokeToolOption]);
-  console.log("tool", {
-    showBrushToolOption: showBrushToolOption,
-    isShowBrushToolOption: isShowBrushToolOption,
-    showStrokeToolOption: showStrokeToolOption,
-    activeMenuItem,
-    showToggle: showToggle,
-  });
-
-  // console.log(
-  //   isShowBrushToolOption,
-  //   isShowStrokeToolOption,
-  //   activeMenuItem,
-  //   MENU_ITEMS.PENCIL,
-  //   "test",
-  //   showStrokeToolOption,
-  //   showBrushToolOption
-  // );
+  const showContainer = showStrokeToolOption || showBrushToolOption;
 
   return (
-    <Stack className={styles.toolboxContainer}>
+    <Stack
+      className={styles.toolboxContainer}
+      sx={{ display: showContainer ? "flex" : "none" }}
+    >
       {showStrokeToolOption && (
         <Stack justifyContent={"space-between"} gap={"24px"}>
           <Stack

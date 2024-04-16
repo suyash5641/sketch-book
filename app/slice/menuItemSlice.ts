@@ -7,7 +7,7 @@ const initialState = {
   actionMenuItem: null,
   showBrushToolOption: false,
   showStrokeToolOption: false,
-  showToggle: true,
+  isToggle: true,
 };
 
 export const menuItemSlice = createSlice({
@@ -30,7 +30,7 @@ export const menuItemSlice = createSlice({
       state.showStrokeToolOption = action.payload;
     },
     showToggle: (state, action) => {
-      state.showToggle = action.payload;
+      state.isToggle = action.payload;
     },
   },
 });
