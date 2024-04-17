@@ -16,7 +16,7 @@ import { MENU_ITEMS } from "@/app/utils/constant";
 import Image from "next/image";
 export const Menu = () => {
   const dispatch = useDispatch();
-  const { activeMenuItem, showStrokeToolOption, showBrushToolOption } =
+  const { currentMenuItem, showStrokeToolOption, showBrushToolOption } =
     useSelector((state: any) => state?.menu);
 
   const handleMenuClick = (itemName: string) => {
@@ -43,7 +43,7 @@ export const Menu = () => {
         <IconButton
           onClick={(e) => handleMenuClick(MENU_ITEMS.PENCIL)}
           className={
-            activeMenuItem === MENU_ITEMS.PENCIL
+            currentMenuItem === MENU_ITEMS.PENCIL
               ? styles.activeMenuIcon
               : styles.inactiveMenuIcon
           }
@@ -54,7 +54,7 @@ export const Menu = () => {
       <Tooltip title="Erase" className={styles.tooltip} arrow>
         <IconButton
           className={
-            activeMenuItem === MENU_ITEMS.ERASER
+            currentMenuItem === MENU_ITEMS.ERASER
               ? styles.activeMenuIcon
               : styles.inactiveMenuIcon
           }
@@ -70,17 +70,38 @@ export const Menu = () => {
         </IconButton>
       </Tooltip>
       <Tooltip title="Undo" className={styles.tooltip} arrow>
-        <IconButton onClick={() => handleActionItemClick(MENU_ITEMS.UNDO)}>
+        <IconButton
+          className={
+            currentMenuItem === MENU_ITEMS.UNDO
+              ? styles.activeMenuIcon
+              : styles.inactiveMenuIcon
+          }
+          onClick={() => handleActionItemClick(MENU_ITEMS.UNDO)}
+        >
           <ReplayIcon className={styles.icon} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Redo" className={styles.tooltip} arrow>
-        <IconButton onClick={() => handleActionItemClick(MENU_ITEMS.REDO)}>
+        <IconButton
+          className={
+            currentMenuItem === MENU_ITEMS.REDO
+              ? styles.activeMenuIcon
+              : styles.inactiveMenuIcon
+          }
+          onClick={() => handleActionItemClick(MENU_ITEMS.REDO)}
+        >
           <ReplayIcon className={styles.redoIcon} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Download" className={styles.tooltip} arrow>
-        <IconButton onClick={() => handleActionItemClick(MENU_ITEMS.DOWNLOAD)}>
+        <IconButton
+          className={
+            currentMenuItem === MENU_ITEMS.DOWNLOAD
+              ? styles.activeMenuIcon
+              : styles.inactiveMenuIcon
+          }
+          onClick={() => handleActionItemClick(MENU_ITEMS.DOWNLOAD)}
+        >
           <FileDownloadIcon className={styles.icon} />
         </IconButton>
       </Tooltip>

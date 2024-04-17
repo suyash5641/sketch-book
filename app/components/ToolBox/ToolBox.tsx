@@ -1,13 +1,21 @@
 "use client";
 import { changeBrushSize, changeColor } from "@/app/slice/toolBoxSlice";
-import { MENU_ITEMS, TOOLCOLORS } from "@/app/utils/constant";
+import { DRAWING_TYPE, MENU_ITEMS, TOOLCOLORS } from "@/app/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ToolBox.module.css";
-import { Stack, Typography } from "@mui/material";
+import RectangleOutlinedIcon from "@mui/icons-material/RectangleOutlined";
+import { IconButton, Stack, Switch, Typography } from "@mui/material";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { useState } from "react";
+import { drawShape } from "@/app/slice/menuItemSlice";
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+import GestureIcon from "@mui/icons-material/Gesture";
 
 export const ToolBox = () => {
   const dispatch = useDispatch();
-  const { activeMenuItem, isToggle } = useSelector((state: any) => state?.menu);
+  const { activeMenuItem, isToggle, drawingType } = useSelector(
+    (state: any) => state?.menu
+  );
   const showStrokeToolOption = isToggle && activeMenuItem === MENU_ITEMS.PENCIL;
   const showBrushToolOption =
     isToggle &&
@@ -27,6 +35,20 @@ export const ToolBox = () => {
   };
 
   const showContainer = showStrokeToolOption || showBrushToolOption;
+
+  // const { isToggle, activeMenuItem } = useSelector((state: any) => state?.menu);
+  // const [checked, setChecked] = useState<boolean>(drawingType ?? false);
+  // const dispatch = useDispatch();
+  const [text, setText] = useState("Stroke and Brush Size");
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChecked(event.target.checked);
+  //   dispatch(drawShape(event.target.checked));
+  // };
+
+  const handleMenuClick = (itemName: string) => {
+    dispatch(drawShape(itemName));
+  };
 
   return (
     <Stack
@@ -49,6 +71,64 @@ export const ToolBox = () => {
                 borderRadius: "4px",
               }}
             ></Stack>
+          </Stack>
+          <Stack flexDirection={"row"}>
+            <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.SHAPE)}>
+              <RectangleOutlinedIcon
+                className={
+                  drawingType === DRAWING_TYPE.SHAPE
+                    ? styles.activeDrawIcon
+                    : styles.inactiveDrawIcon
+                }
+              />
+            </IconButton>
+            <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.FREEHAND)}>
+              <GestureIcon
+                className={
+                  drawingType === DRAWING_TYPE.FREEHAND
+                    ? styles.activeDrawIcon
+                    : styles.inactiveDrawIcon
+                }
+              />
+            </IconButton>
+            <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.LINE)}>
+              <HorizontalRuleIcon
+                className={
+                  drawingType === DRAWING_TYPE.LINE
+                    ? styles.activeDrawIcon
+                    : styles.inactiveDrawIcon
+                }
+              />
+            </IconButton>
+            {/* <Stack className={styles.strokeContainer} flexDirection={"row"}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    sx={{
+                      "&.MuiSwitch-root": {
+                        height: "32px",
+                        width: "54px",
+                      },
+
+                      "&.MuiSwitch-root .MuiSwitch-thumb": {
+                        height: "13px",
+                        width: "13px",
+                      },
+                    }}
+                  />
+                }
+                className={styles.label}
+                sx={{
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label ": {
+                    fontSize: "12px",
+                  },
+                }}
+                label=""
+              />
+             
+            </Stack> */}
           </Stack>
           <Stack
             flexDirection={"row"}

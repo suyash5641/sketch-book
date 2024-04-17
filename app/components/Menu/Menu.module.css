@@ -47,6 +47,11 @@
 .inactiveMenuIcon {
   background: var(--background-white);
 }
+
+.activeMenuIcon:hover,
+.inactiveMenuIcon:hover {
+  background: var(--activeIcon); /* Set the same background color on hover */
+}
 .tooltip {
   /* background-color: rgb(var(--foreground-rgb));
   color: var(--background-white); */
