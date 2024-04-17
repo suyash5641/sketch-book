@@ -101,13 +101,39 @@ const useCanvas = () => {
   const saveCanvasAsImage = () => {
     const canvas = canvasRef.current;
 
+    // if (canvas) {
+    //   const image = new Image();
+    //   image.src = canvas.toDataURL("image/png");
+    //   const link = document.createElement("a");
+    //   link.href = image.src;
+    //   link.download = "canvas_image.png";
+    //   link.click();
+    // }
     if (canvas) {
       const image = new Image();
       image.src = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = image.src;
-      link.download = "canvas_image.png";
-      link.click();
+
+      const tempCanvas = document.createElement("canvas");
+      const tempCtx = tempCanvas?.getContext("2d");
+      if (!tempCtx) return;
+
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+
+      // Draw a white background
+      tempCtx.fillStyle = "white";
+      tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+      // Draw the image on top of the white background
+      image.onload = () => {
+        tempCtx.drawImage(image, 0, 0);
+
+        // Create a download link for the new canvas
+        const link = document.createElement("a");
+        link.href = tempCanvas.toDataURL("image/png");
+        link.download = "canvas_image.png";
+        link.click();
+      };
     }
   };
 
