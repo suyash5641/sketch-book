@@ -40,12 +40,14 @@
   --card-border-rgb: 131, 134, 135;
   --background-white: #ffffff;
   --background-blue: #0000ff;
-  --background-green: #00ff00;
+  --background-green: #008000;
   --background-yellow: #ffff00;
   --background-orange: #ffa500;
   --background-red: #ff0000;
   --activeIcon: #e0dfff;
+  --activeIconRGB: rgb(63 58 58 / 20%);
   --toolTextColor: #999999;
+  --border: #d5c5c5;
 }
 
 @media (prefers-color-scheme: dark) {

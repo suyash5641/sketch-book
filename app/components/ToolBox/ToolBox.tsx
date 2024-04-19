@@ -72,7 +72,8 @@ export const ToolBox = () => {
               }}
             ></Stack>
           </Stack>
-          <Stack flexDirection={"row"}>
+          <Stack flexDirection={"row"} alignItems={"center"} gap={0.5}>
+            <Typography className={styles.toolText}>Shape</Typography>
             <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.SHAPE)}>
               <RectangleOutlinedIcon
                 className={
@@ -82,6 +83,7 @@ export const ToolBox = () => {
                 }
               />
             </IconButton>
+            <Typography className={styles.toolText}>Free hand</Typography>
             <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.FREEHAND)}>
               <GestureIcon
                 className={
@@ -91,6 +93,7 @@ export const ToolBox = () => {
                 }
               />
             </IconButton>
+            <Typography className={styles.toolText}>Line</Typography>
             <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.LINE)}>
               <HorizontalRuleIcon
                 className={
