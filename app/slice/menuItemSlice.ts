@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MENU_ITEMS } from "../utils/constant";
+import { MENU_ITEMS, DRAWING_TYPE } from "../utils/constant";
 
 const initialState = {
   activeMenuItem: MENU_ITEMS.PENCIL,
@@ -8,6 +8,7 @@ const initialState = {
   showBrushToolOption: false,
   showStrokeToolOption: false,
   isToggle: true,
+  drawingType: DRAWING_TYPE.FREEHAND,
 };
 
 export const menuItemSlice = createSlice({
@@ -32,6 +33,9 @@ export const menuItemSlice = createSlice({
     showToggle: (state, action) => {
       state.isToggle = action.payload;
     },
+    drawShape: (state, action) => {
+      state.drawingType = action.payload;
+    },
   },
 });
 
@@ -42,6 +46,7 @@ export const {
   showBrushToggleOptions,
   currentMenuItemClick,
   showToggle,
+  drawShape,
 } = menuItemSlice.actions;
 
 export default menuItemSlice.reducer;

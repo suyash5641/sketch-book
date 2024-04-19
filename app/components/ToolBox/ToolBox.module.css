@@ -14,40 +14,41 @@
   margin: 0px 12px;
   width: fit-content;
   border-radius: 8px;
+  background: var(--background-white);
 }
 .red {
-  background-color: red;
+  background-color: var(--background-red);
   width: 24px;
   height: 24px;
   border-radius: 4px;
 }
 .blue {
-  background-color: blue;
+  background-color: var(--background-blue);
   width: 24px;
   height: 24px;
   border-radius: 4px;
 }
 .orange {
-  background-color: orange;
+  background-color: var(--background-orange);
   width: 24px;
   height: 24px;
   border-radius: 4px;
 }
 
 .yellow {
-  background-color: yellow;
+  background-color: var(--background-yellow);
   width: 24px;
   height: 24px;
   border-radius: 4px;
 }
 .black {
-  background-color: black;
+  background-color: rgb(var(--foreground-rgb));
   width: 24px;
   height: 24px;
   border-radius: 4px;
 }
 .green {
-  background-color: green;
+  background-color: var(--background-green);
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -78,4 +79,12 @@
   color: var(--toolTextColor);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
+}
+
+.activeDrawIcon {
+  background: var(--activeIcon);
+}
+
+.inactiveDrawIcon {
+  background: none;
 }
