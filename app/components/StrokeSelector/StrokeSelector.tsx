@@ -55,7 +55,7 @@ export default function StrokeSelector() {
   return (
     <Stack className={styles.strokeContainer} flexDirection={"row"}>
       <Tooltip title="Edit" arrow>
-        <ColorLensIcon className={styles.icon} />
+        <ColorLensIcon />
       </Tooltip>
       <FormControlLabel
         control={

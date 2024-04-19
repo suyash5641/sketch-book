@@ -74,6 +74,20 @@ export const ToolBox = () => {
           </Stack>
           <Stack
             flexDirection={"row"}
+            justifyContent={"space-between"}
+            gap={"16px"}
+            className={styles.toolContainer}
+          >
+            {TOOLCOLORS.map((data, index) => (
+              <Stack
+                key={index}
+                className={styles[data]}
+                onClick={() => updateColor(data)}
+              />
+            ))}
+          </Stack>
+          <Stack
+            flexDirection={"row"}
             alignItems={"center"}
             gap={0.5}
             flexWrap={"wrap"}
@@ -108,49 +122,6 @@ export const ToolBox = () => {
                 }
               />
             </IconButton>
-            {/* <Stack className={styles.strokeContainer} flexDirection={"row"}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={checked}
-                    onChange={handleChange}
-                    sx={{
-                      "&.MuiSwitch-root": {
-                        height: "32px",
-                        width: "54px",
-                      },
-
-                      "&.MuiSwitch-root .MuiSwitch-thumb": {
-                        height: "13px",
-                        width: "13px",
-                      },
-                    }}
-                  />
-                }
-                className={styles.label}
-                sx={{
-                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label ": {
-                    fontSize: "12px",
-                  },
-                }}
-                label=""
-              />
-             
-            </Stack> */}
-          </Stack>
-          <Stack
-            flexDirection={"row"}
-            justifyContent={"space-between"}
-            gap={"16px"}
-            className={styles.toolContainer}
-          >
-            {TOOLCOLORS.map((data, index) => (
-              <Stack
-                key={index}
-                className={styles[data]}
-                onClick={() => updateColor(data)}
-              />
-            ))}
           </Stack>
         </Stack>
       )}
