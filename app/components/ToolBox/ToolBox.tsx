@@ -72,7 +72,12 @@ export const ToolBox = () => {
               }}
             ></Stack>
           </Stack>
-          <Stack flexDirection={"row"} alignItems={"center"} gap={0.5}>
+          <Stack
+            flexDirection={"row"}
+            alignItems={"center"}
+            gap={0.5}
+            flexWrap={"wrap"}
+          >
             <Typography className={styles.toolText}>Shape</Typography>
             <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.SHAPE)}>
               <RectangleOutlinedIcon
