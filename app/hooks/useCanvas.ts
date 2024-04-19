@@ -18,7 +18,12 @@ interface Line {
 }
 
 const useCanvas = () => {
-  const { drawingType } = useSelector((state: any) => state?.menu);
+  const { drawingType, activeMenuItem, actionMenuItem } = useSelector(
+    (state: any) => state?.menu
+  );
+  const { strokeColor, size } = useSelector(
+    (state: any) => state?.toolbox[activeMenuItem]
+  );
   const [color, setColor] = useState<string>("black");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
@@ -140,10 +145,11 @@ const useCanvas = () => {
     // rectangles.forEach((rect) => {
     //   ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
     // });
-    drawHistory.current.forEach((index, p) => {
-      const imageData = drawHistory.current[p];
-      ctx.putImageData(imageData, 0, 0);
-    });
+    // drawHistory.current.forEach((index, p) => {
+    //   const imageData = drawHistory.current[p];
+    //   ctx.putImageData(imageData, 0, 0);
+    // });
+    reDrawCanvas();
     // Draw the new rectangle
     ctx.strokeRect(startX, startY, width, height);
   };
@@ -219,10 +225,11 @@ const useCanvas = () => {
     );
 
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    drawHistory.current.forEach((index, p) => {
-      const imageData = drawHistory.current[p];
-      ctx.putImageData(imageData, 0, 0);
-    });
+    // drawHistory.current.forEach((index, p) => {
+    //   const imageData = drawHistory.current[p];
+    //   ctx.putImageData(imageData, 0, 0);
+    // });
+    reDrawCanvas();
     ctx.beginPath();
     ctx.moveTo(prevStartX, prevStartY);
     ctx.lineTo(endX, endY);
@@ -266,10 +273,16 @@ const useCanvas = () => {
     }
   };
 
+  const reDrawCanvas = () => {
+    console.log(drawHistory, historyPointer);
+    if (ctx.current && historyPointer.current > 0) {
+      const imageData = drawHistory.current[historyPointer.current];
+      ctx.current.putImageData(imageData, 0, 0);
+    }
+  };
+
   const erase = () => {
     if (ctx.current) {
-      ctx.current.strokeStyle = "white";
-      // ctx.current.lineWidth = 10;
       setIsDraw(false);
       dispatch(drawShape("FREEHAND"));
     }
@@ -278,6 +291,7 @@ const useCanvas = () => {
   const Draw = () => {
     if (ctx.current) {
       setIsDraw(true);
+      ctx.current.strokeStyle = strokeColor;
     }
   };
 
@@ -402,6 +416,10 @@ const useCanvas = () => {
     Draw,
     getInitialData,
     color,
+    activeMenuItem,
+    actionMenuItem,
+    strokeColor,
+    size,
   };
 };
 export default useCanvas;

@@ -14,12 +14,9 @@ interface Rectangle {
 
 export const Canvas = () => {
   const dispatch = useDispatch();
-  const { activeMenuItem, actionMenuItem } = useSelector(
-    (state: any) => state?.menu
-  );
-  const { strokeColor, size } = useSelector(
-    (state: any) => state?.toolbox[activeMenuItem]
-  );
+  // const { activeMenuItem, actionMenuItem } = useSelector(
+  //   (state: any) => state?.menu
+  // );
 
   const {
     handleMouseDown,
@@ -38,6 +35,10 @@ export const Canvas = () => {
     Draw,
     getInitialData,
     color,
+    activeMenuItem,
+    actionMenuItem,
+    strokeColor,
+    size,
   } = useCanvas();
 
   useEffect(() => {
@@ -48,8 +49,6 @@ export const Canvas = () => {
       undo();
     } else if (actionMenuItem === MENU_ITEMS.REDO) {
       redo();
-    } else if (activeMenuItem === MENU_ITEMS.PENCIL) {
-      Draw();
     } else if (activeMenuItem === MENU_ITEMS.ERASER) {
       erase();
     }
@@ -66,6 +65,7 @@ export const Canvas = () => {
 
     context.strokeStyle = strokeColor;
     context.lineWidth = size;
+    // console.log("hit color", strokeColor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strokeColor, size]);
 
