@@ -49,7 +49,7 @@ const useCanvas = () => {
   const erase = () => {
     if (ctx.current) {
       ctx.current.strokeStyle = "white";
-      // ctx.current.lineWidth = 10;
+
       setIsDraw(false);
     }
   };
