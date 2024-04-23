@@ -5,17 +5,12 @@ import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import Paper from "@mui/material/Paper";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-import Fade from "@mui/material/Fade";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Stack, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { MENU_ITEMS } from "@/app/utils/constant";
 import { useEffect, useState } from "react";
-import {
-  showStrokeToggleOptions,
-  showBrushToggleOptions,
-  showToggle,
-} from "@/app/slice/menuItemSlice";
+import { showToggle } from "@/app/slice/menuItemSlice";
 
 const icon = (
   <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
@@ -37,7 +32,7 @@ export default function StrokeSelector() {
   const { isToggle, activeMenuItem } = useSelector((state: any) => state?.menu);
   const [checked, setChecked] = useState<boolean>(isToggle ?? true);
   const dispatch = useDispatch();
-  const [text, setText] = useState("Stroke and Brush Size");
+  const [text, setText] = useState("Show Toolbox");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -46,9 +41,9 @@ export default function StrokeSelector() {
 
   useEffect(() => {
     if (activeMenuItem === MENU_ITEMS.PENCIL) {
-      setText("Stroke and Brush Size");
+      setText("Show Toolbox");
     } else if (activeMenuItem === MENU_ITEMS.ERASER) {
-      setText("Brush Size ");
+      setText("Show Eraser Toolbox");
     }
   }, [activeMenuItem]);
 

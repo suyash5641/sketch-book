@@ -27,21 +27,92 @@ const useCanvas = () => {
   const [color, setColor] = useState<string>("black");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
-  const drawing = useRef(false);
+  const drawing = useRef<boolean>(false);
   const drawHistory = useRef<ImageData[]>([]);
   const historyPointer = useRef(0);
   const [isDrawing, setIsDrawing] = useState(false);
   const [draw, setIsDraw] = useState<boolean>(true);
   const [rectangles, setRectangles] = useState<Rectangle[]>([]);
-  const [isDown, setIsDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
-  const [prevStartX, setPrevStartX] = useState(0);
-  const [prevStartY, setPrevStartY] = useState(0);
-  const [prevWidth, setPrevWidth] = useState(0);
-  const [prevHeight, setPrevHeight] = useState(0);
+  const [isDown, setIsDown] = useState<boolean>(false);
+  const [startX, setStartX] = useState<number>(0);
+  const [startY, setStartY] = useState<number>(0);
+  const [prevStartX, setPrevStartX] = useState<number>(0);
+  const [prevStartY, setPrevStartY] = useState<number>(0);
+  const startXRef = useRef<number | null>(null);
+  const startYRef = useRef<number | null>(null);
+  const isDownRef = useRef<boolean>(false);
   const lines = useRef<Line[]>([]);
   const dispatch = useDispatch();
+
+  const drawOval = (x: number, y: number) => {
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!ctx || !startXRef.current || !startYRef.current) return;
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ReDrawCanvas();
+    ctx.beginPath();
+    ctx.moveTo(
+      startXRef.current,
+      startYRef.current + (y - startYRef.current) / 2
+    );
+    ctx.bezierCurveTo(
+      startXRef.current,
+      startYRef.current,
+      x,
+      startYRef.current,
+      x,
+      startYRef.current + (y - startYRef.current) / 2
+    );
+    ctx.bezierCurveTo(
+      x,
+      y,
+      startXRef.current,
+      y,
+      startXRef.current,
+      startYRef.current + (y - startYRef.current) / 2
+    );
+    ctx.closePath();
+    ctx.stroke();
+  };
+
+  const handleCircleMouseDown = (e: any) => {
+    if (!canvasRef.current) return;
+    const canvasOffset = canvasRef.current.getBoundingClientRect();
+    startXRef.current = e.clientX ?? e.touches[0]?.clientX - canvasOffset.left;
+    startYRef.current = e.clientY ?? e.touches[0]?.clientY - canvasOffset.top;
+    isDownRef.current = true;
+  };
+
+  const handleCircleMouseMove = (e: any) => {
+    if (
+      !isDownRef.current ||
+      !canvasRef.current ||
+      !ctx.current ||
+      !startXRef.current ||
+      !startYRef.current
+    )
+      return;
+
+    const canvasOffset = canvasRef.current.getBoundingClientRect();
+    const mouseX = e.clientX ?? e.touches[0]?.clientX - canvasOffset.left;
+    const mouseY = e.clientY ?? e.touches[0]?.clientY - canvasOffset.top;
+    drawOval(mouseX, mouseY);
+  };
+
+  const handleCircleMouseUp = () => {
+    if (!isDownRef.current) return;
+
+    isDownRef.current = false;
+    if (canvasRef?.current) {
+      const imageData = canvasRef?.current
+        ?.getContext("2d")
+        ?.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
+      if (imageData) {
+        drawHistory.current.push(imageData);
+        historyPointer.current = drawHistory.current.length - 1;
+      }
+    }
+  };
 
   const handleRectangleMouseDown = (e: any) => {
     if (!canvasRef.current) return;
@@ -121,35 +192,9 @@ const useCanvas = () => {
     const width = mouseX - startX;
     const height = mouseY - startY;
 
-    // ctx.clearRect(startX, startY, prevWidth, prevHeight);
-
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    // ctx.strokeRect(startX, startY, width, height);
 
-    // rectangles.forEach((rect) => {
-    //   ctx.strokeRect(rect?.x, rect.y, rect.width, rect.height);
-    // });
-
-    // ctx.strokeRect(startX, startY, width, height);
-
-    // // Update previous values
-    // setPrevWidth(width);
-    // setPrevHeight(height);
-    // ctx.strokeRect(startX, startY, width, height);
-
-    // rectangles.forEach((rect) => {
-    //   ctx.strokeRect(rect?.x, rect.y, rect.width, rect.height);
-    // });
-
-    // ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    // rectangles.forEach((rect) => {
-    //   ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
-    // });
-    // drawHistory.current.forEach((index, p) => {
-    //   const imageData = drawHistory.current[p];
-    //   ctx.putImageData(imageData, 0, 0);
-    // });
-    reDrawCanvas();
+    ReDrawCanvas();
     // Draw the new rectangle
     ctx.strokeRect(startX, startY, width, height);
   };
@@ -170,13 +215,13 @@ const useCanvas = () => {
   };
 
   const handleLineMouseUp = (e: any) => {
-    const c = canvasRef.current;
+    const contextRef = canvasRef.current;
     const ctx = canvasRef?.current?.getContext("2d");
-    if (!c || !ctx) return;
+    if (!contextRef || !ctx) return;
 
     if (isDown) {
-      const offsetX = c.offsetLeft;
-      const offsetY = c.offsetTop;
+      const offsetX = contextRef.offsetLeft;
+      const offsetY = contextRef.offsetTop;
       const endX = parseInt(
         (e.clientX ?? e.touches[0]?.clientX - offsetX).toString()
       );
@@ -225,11 +270,7 @@ const useCanvas = () => {
     );
 
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    // drawHistory.current.forEach((index, p) => {
-    //   const imageData = drawHistory.current[p];
-    //   ctx.putImageData(imageData, 0, 0);
-    // });
-    reDrawCanvas();
+    ReDrawCanvas();
     ctx.beginPath();
     ctx.moveTo(prevStartX, prevStartY);
     ctx.lineTo(endX, endY);
@@ -273,8 +314,7 @@ const useCanvas = () => {
     }
   };
 
-  const reDrawCanvas = () => {
-    console.log(drawHistory, historyPointer);
+  const ReDrawCanvas = () => {
     if (ctx.current && historyPointer.current > 0) {
       const imageData = drawHistory.current[historyPointer.current];
       ctx.current.putImageData(imageData, 0, 0);
@@ -335,15 +375,6 @@ const useCanvas = () => {
 
   const saveCanvasAsImage = () => {
     const canvas = canvasRef.current;
-
-    // if (canvas) {
-    //   const image = new Image();
-    //   image.src = canvas.toDataURL("image/png");
-    //   const link = document.createElement("a");
-    //   link.href = image.src;
-    //   link.download = "canvas_image.png";
-    //   link.click();
-    // }
     if (canvas) {
       const image = new Image();
       image.src = canvas.toDataURL("image/png");
@@ -363,7 +394,6 @@ const useCanvas = () => {
       image.onload = () => {
         tempCtx.drawImage(image, 0, 0);
 
-        // Create a download link for the new canvas
         const link = document.createElement("a");
         link.href = tempCanvas.toDataURL("image/png");
         link.download = "canvas_image.png";
@@ -373,29 +403,60 @@ const useCanvas = () => {
   };
 
   const selectMouseDown = (e: any) => {
-    if (drawingType === DRAWING_TYPE.LINE) handleLineMouseDown(e);
-    else if (drawingType === DRAWING_TYPE.FREEHAND) handleMouseDown(e);
-    if (drawingType === DRAWING_TYPE.SHAPE) handleRectangleMouseDown(e);
+    switch (drawingType) {
+      case DRAWING_TYPE.LINE:
+        handleLineMouseDown(e);
+        break;
+      case DRAWING_TYPE.FREEHAND:
+        handleMouseDown(e);
+        break;
+      case DRAWING_TYPE.SHAPE:
+        handleRectangleMouseDown(e);
+        break;
+      case DRAWING_TYPE.CIRCLE:
+        handleCircleMouseDown(e);
+        break;
+      default:
+        break;
+    }
   };
 
   const selectMouseUp = (e: any) => {
-    // if (drawingType) {
-    //   // handleRectangleMouseUp(e);
-    //   handleLineMouseUp(e);
-    // } else handleMouseUp();
-    if (drawingType === DRAWING_TYPE.LINE) handleLineMouseUp(e);
-    else if (drawingType === DRAWING_TYPE.FREEHAND) handleMouseUp();
-    if (drawingType === DRAWING_TYPE.SHAPE) handleRectangleMouseUp(e);
+    switch (drawingType) {
+      case DRAWING_TYPE.LINE:
+        handleLineMouseUp(e);
+        break;
+      case DRAWING_TYPE.FREEHAND:
+        handleMouseUp();
+        break;
+      case DRAWING_TYPE.SHAPE:
+        handleRectangleMouseUp(e);
+        break;
+      case DRAWING_TYPE.CIRCLE:
+        handleCircleMouseUp();
+        break;
+      default:
+        break;
+    }
   };
 
   const selectMouseMove = (e: any) => {
-    // if (drawingType) {
-    //   // handleRectangleMouseMove(e);
-    //   handleLineMouseMove(e);
-    // } else handleMouseMove(e);
-    if (drawingType === DRAWING_TYPE.LINE) handleLineMouseMove(e);
-    else if (drawingType === DRAWING_TYPE.FREEHAND) handleMouseMove(e);
-    if (drawingType === DRAWING_TYPE.SHAPE) handleRectangleMouseMove(e);
+    switch (drawingType) {
+      case DRAWING_TYPE.LINE:
+        handleLineMouseMove(e);
+        break;
+      case DRAWING_TYPE.FREEHAND:
+        handleMouseMove(e);
+        break;
+      case DRAWING_TYPE.SHAPE:
+        handleRectangleMouseMove(e);
+        break;
+      case DRAWING_TYPE.CIRCLE:
+        handleCircleMouseMove(e);
+        break;
+      default:
+        break;
+    }
   };
 
   return {
