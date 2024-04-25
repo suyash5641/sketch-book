@@ -2,20 +2,7 @@ import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DRAWING_TYPE } from "../utils/constant";
 import { drawShape } from "../slice/menuItemSlice";
-interface Rectangle {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-interface Line {
-  startX: number;
-  startY: number;
-  endX: number;
-  endY: number;
-  color: string;
-}
+import { Rectangle, Line } from "../interface/interface";
 
 const useCanvas = () => {
   const { drawingType, activeMenuItem, actionMenuItem } = useSelector(
