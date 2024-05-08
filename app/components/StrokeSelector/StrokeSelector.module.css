@@ -26,5 +26,6 @@
     left: 0px;
     right: 0px;
     margin: 0px 12px;
+    background: var(--colorBox);
   }
 }
