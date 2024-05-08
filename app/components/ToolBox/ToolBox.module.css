@@ -14,7 +14,7 @@
   margin: 0px 12px;
   width: fit-content;
   border-radius: 8px;
-  background: var(--background-white);
+  background: var(--colorBox);
 }
 .red {
   background-color: var(--background-red);
@@ -84,7 +84,7 @@
 .activeDrawIcon {
   background: var(--activeIconRGB);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--activeIconRGB); */
   border-radius: 4px;
 }
 

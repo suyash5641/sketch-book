@@ -4,12 +4,13 @@ import { DRAWING_TYPE, MENU_ITEMS, TOOLCOLORS } from "@/app/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ToolBox.module.css";
 import RectangleOutlinedIcon from "@mui/icons-material/RectangleOutlined";
-import { IconButton, Stack, Switch, Typography } from "@mui/material";
+import { Grid, IconButton, Stack, Switch, Typography } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
 import { drawShape } from "@/app/slice/menuItemSlice";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import GestureIcon from "@mui/icons-material/Gesture";
+import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 
 export const ToolBox = () => {
   const dispatch = useDispatch();
@@ -72,20 +73,34 @@ export const ToolBox = () => {
               }}
             ></Stack>
           </Stack>
-          <Stack
+          <Grid
+            container
+            spacing={2}
             flexDirection={"row"}
-            justifyContent={"space-between"}
-            gap={"16px"}
+            justifyContent={"center"}
+            gap={"4px"}
             className={styles.toolContainer}
           >
             {TOOLCOLORS.map((data, index) => (
-              <Stack
+              <Grid
+                item
+                xs={3}
                 key={index}
-                className={styles[data]}
-                onClick={() => updateColor(data)}
-              />
+                className={styles.grid}
+                sx={{
+                  "&.MuiGrid-item": {
+                    padding: "8px 0px 0px 8px",
+                  },
+                }}
+              >
+                <Stack
+                  key={index}
+                  className={styles[data]}
+                  onClick={() => updateColor(data)}
+                />
+              </Grid>
             ))}
-          </Stack>
+          </Grid>
           <Stack
             flexDirection={"row"}
             alignItems={"center"}
@@ -102,11 +117,29 @@ export const ToolBox = () => {
                 }
               />
             </IconButton>
+
             <Typography className={styles.toolText}>Free hand</Typography>
             <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.FREEHAND)}>
               <GestureIcon
                 className={
                   drawingType === DRAWING_TYPE.FREEHAND
+                    ? styles.activeDrawIcon
+                    : styles.inactiveDrawIcon
+                }
+              />
+            </IconButton>
+          </Stack>
+          <Stack
+            flexDirection={"row"}
+            alignItems={"center"}
+            gap={0.5}
+            flexWrap={"wrap"}
+          >
+            <Typography className={styles.toolText}>Circle</Typography>
+            <IconButton onClick={() => handleMenuClick(DRAWING_TYPE.CIRCLE)}>
+              <CircleOutlinedIcon
+                className={
+                  drawingType === DRAWING_TYPE.CIRCLE
                     ? styles.activeDrawIcon
                     : styles.inactiveDrawIcon
                 }

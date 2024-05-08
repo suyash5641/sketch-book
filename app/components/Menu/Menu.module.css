@@ -1,23 +1,7 @@
-.menuContainer {
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  top: 12px;
-
-  /* padding: 12px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
-}
-
 .container {
   justify-content: center;
   align-items: center;
   gap: 16px;
-  /* position: absolute;
-  z-index: 2;
-  width: 100%; */
   z-index: 5;
   position: absolute;
   padding: 4px 12px;
@@ -26,8 +10,8 @@
   top: 12px;
 
   left: 40%;
-  /* right: 40%; */
-  /* width: 100%; */
+
+  background: var(--colorBox);
 }
 
 .icon {
@@ -59,16 +43,8 @@
 
 @media screen and (max-width: 640px) {
   .container {
-    /* width: calc(100% - 24px); */
     left: 0px;
     right: 0px;
     margin: 0px 12px;
-
-    /* left: 8px;
-    right: 8px; */
-    /* left: 50%; */
-    /* left: 40%; */
-    /* right: 40%; */
-    /* width: 100%; */
   }
 }
